@@ -14,8 +14,8 @@ Depois deste workshop, vais saber:
 3) Criar um branch com `git switch`
 4) Usar `git add` e `git commit` para guardar modificações ao código
 5) Enviar o commit para o gitlab com `git push`
-5) (pt2) ?Checkout?Switch? para o ?makefile?
-6) Atualizar o respositório local com `git pull`
+6) Juntar dois branches com `git merge`
+7) Atualizar o respositório local com `git pull`
 
 ## 0. Criar uma chave SSH e adicionar ao gitlab
 
@@ -35,3 +35,21 @@ Ao correr o comando, ele vai perguntar onde queremos guardar a nova chave. Por d
 Depois de escolher a localização, o comando pergunta se queremos usar uma `passphrase`, que funciona como uma palavra passe para usar a vossa chave. Se quiserem usar esta funcionalidade, sempre que o git comunicar com o gitlab, vão ter de escrever a palavra passe. Se não quiserem usar, basta carregar enter sem escrever nada. Ele pede para repertir a palvra passe, basta carregar enter mais uma vez.
 
 Por fim, ele gera a chave, guarda-a onde indicámos e mostra um esquema da chave. (É giro mas não faz nada de útil)
+
+### Adicionar ao gitlab
+
+Agora que já temos a nossa chave, temos de a adicionar ao gitlab para que ela seja útil.
+
+## 1. git clone
+
+## 2. git branch
+
+## 3. git switch
+
+## 4. git add & git commit
+
+## 5. git push
+
+## 6. git merge
+
+## 7. git pull
