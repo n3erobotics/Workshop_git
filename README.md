@@ -57,9 +57,27 @@ Podem ver também o tutorial oficial do GitHub [aqui](https://docs.github.com/en
 
 ## 1. git clone
 
+Para começar a trabalhar com o repositório, precisam de o clonar para o vosso computador. O comando git clone serve para fazer uma cópia local do repositório remoto que está no GitHub.
+
+O comando `git clone <link>` serve exatamente para isto. Podem obter o link no site do repositório, carregando em 'Code' > 'SSH' e copiando o link que aparece.
+
+O repositório vai ser posto numa pasta nova, com o mesmo nome do próprio, na localização onde o terminal estava a correr.
+
 ## 2. git branch
 
+Depois de clonarem o repositório, podem verificar as branches existentes. Uma branch é como uma linha de desenvolvimento independente onde fazem alterações.
+
+O comando `git branch` mostra-vos os branches que têm na vossa cópia local do repositório. Para verem também os que existem no GitHub, podem adicionar `-a` (short para `--all`).
+
+Com o `git branch -a` devem conseguir ver pelo menos um `master` e 3 que começam com `remotes/origin`, que são os que existem no GitHub.
+
 ## 3. git switch
+
+Para mudar de branch, usam o comando git switch. Isto é importante para trabalhar em funcionalidades diferentes sem alterar diretamente o código principal. Este comando permite-nos não só mudar de branch, mas também criar branches novos.
+
+O comando `git switch <branch>` muda o branch para um branch existente. Se quiserem criar um novo para trabalhar, podem usar `git switch -c <branch>`.
+
+Por agora, criem um branch com o vosso número.
 
 ## 4. git add & git commit
 
