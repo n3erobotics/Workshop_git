@@ -12,4 +12,4 @@ bin: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean: 
-	rm -f $(OBJS)
+	rm -f $(OBJS) bin
