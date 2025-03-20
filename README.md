@@ -65,24 +65,109 @@ O repositório vai ser posto numa pasta nova, com o mesmo nome do próprio, na l
 
 ## 2. git branch
 
-Depois de clonarem o repositório, podem verificar as branches existentes. Uma branch é como uma linha de desenvolvimento independente onde fazem alterações.
+Depois de clonarem o repositório, podem verificar as branches existentes. Uma branch é uma "biforcação" da história do desenvolvimento do vosso projeto, isto é, uma linha de desenvolvimento independente, mas com um ponto em comum.
 
 O comando `git branch` mostra-vos os branches que têm na vossa cópia local do repositório. Para verem também os que existem no GitHub, podem adicionar `-a` (short para `--all`).
 
 Com o `git branch -a` devem conseguir ver pelo menos um `master` e 3 que começam com `remotes/origin`, que são os que existem no GitHub.
 
+Também podem utilizar o `git branch` para criar um novo branch, por exemplo: `git branch ist1xxxxxx`.
+
 ## 3. git switch
 
-Para mudar de branch, usam o comando git switch. Isto é importante para trabalhar em funcionalidades diferentes sem alterar diretamente o código principal. Este comando permite-nos não só mudar de branch, mas também criar branches novos.
+Para mudar de branch, usam o comando git switch. Isto é importante para trabalhar em funcionalidades diferentes sem alterar diretamente o código principal. Este comando permite-nos mudar de branch.
 
-O comando `git switch <branch>` muda o branch para um branch existente. Se quiserem criar um novo para trabalhar, podem usar `git switch -c <branch>`.
+O comando `git switch <branch>` muda o branch para um branch existente.
 
-Por agora, criem um branch com o vosso número.
+Também podem utilizar o switch para criar o branch para que querem mudar, com a flag `-c <novo-branch>`. Exemplo: `git switch -c ist1xxxxxx`. Este comando é equivalente a `git branch ist1xxxxxx` seguido de `git switch ist1xxxxxx`.
+
+Por agora, criem um branch com o vosso número!
 
 ## 4. git add & git commit
 
-## 5. git push
+Neste momento já estão na vossa história, podem alterar o vosso projeto sem ter medo de perder o "checkpoint".
 
-## 6. git merge
+Criem um ficheiro qualquer, por exemplo `test.txt`.
+
+Depois de o criarem, podem reparar, utilizando o `git status`, que o git consegue ver que há uma alteração em relação ao último commit ou "checkpoint".
+
+Agora querem criar um novo "checkpoint" com este novo ficheiro. O comando `git commit` cria o tal "checkpoint", mas primeiro têm de lhe dizer o que é que ele deve adicionar ao "checkpoint", porque podem ter criado ficheiros ou feito outras alterações que não querem que conte para o projeto.
+
+Executando o `git add test.txt`, estão a dizer ao git para contar com a alteração para o próximo commit.
+
+Agora, executem `git commit`.
+
+Vai-vos aparecer um editor à frente para escreverem uma descrição do commit, por exemplo `create test.txt`.
+Guardem e fechem o editor (assumindo que estão a utilizar `nano`, o editor default do git, façam: `CTRL+X, Y, Enter`).
+
+Pronto! Agora têm um novo checkpoint no vosso projeto!
+
+Podem ver com o `git status` que não têm alterações em relação ao último commit e podem ver com o `git log --graph --all` o histórico dos commits do projeto.
+
+## 5. git merge
+
+Agora vem um comando mais complicado... o `git merge`.
+
+Criaste um branch novo para experimentar adicionar uma feature ao teu projeto, sem correr o risco de "rebentar" com o trabalho todo que já tinhas feito. Ao fim duns dias a bater com a cabeça na parede, está a funcionar! Já é seguro aplicar esse trabalho à versão principal do projeto.
+
+Isso faz-se com o `git merge`. Esse comando faz "replay" dos vossos commits do branch que lhe indicares.
+
+Faz `git switch master` e, de seguida, `git merge ist1xxxxxx`. Isto faz replay dos commit que fizeste no `ist1xxxxxx` no `master`.
+
+Esta storyline
+
+... --- `último commit` (`master`)
+                       \
+                        `create test.txt` (`ist1xxxxxx`)
+
+Passa a esta
+
+... --- `último commit` ----------------- `create test.txt` (`master`)
+                       \                 /
+                        `create test.txt`                   (`ist1xxxxxx`)
+
+Neste caso é um merge simples, copia a storyline dum para o outro.
+
+---
+
+Um exemplo mais complicado...
+
+Imagina os commits X, A e B dispostos na seguinte storyline:
+
+`X`             (`master`)
+   \
+    ----- `A`   (`feature-1`)
+     \
+      --- `B`   (`feature-2`)
+
+Ambos os commits A e B foram feitos sobre o commit X. Se fizemos `git merge feature-1` seguido de `git merge feature-2`:
+
+`X` --------------- `A` --- `B'`     (`master`)
+   \               /       /
+    ----- `A` -----       /          (`feature-1`)
+     \                   /
+      ------- `B` -------            (`feature-2`)
+
+Se cada branch fizer alterações a ficheiros diferentes, ele consegue automaticamente fazer replay do `B` sobre o `A`, mas tecnicamente é um commit diferente, porque é uma base diferente. O `git` é vosso amigo e muda a base do `B` por vocês (para o fazer manualmente, utilizariam o `git rebase`, que não vou explorar aqui, mas recomendo que o investiguem).
+
+No caso em que alteram os dois commits alteram o mesmo ficheiro, o `git` vai pedir-te ajuda para resolver os conflitos. Um dia aprenderão a fazê-lo, a bem ou a mal :)
+
+## 6. git push
+
+No início, replicaram o nosso projeto no GitHub com o `git clone`, certo?
+Agora, podem atualizar a réplica remota com a história da vossa réplica local com o `git push`.
+
+Provavelmente vai-vos mostrar este erro: `fatal: The current branch ist1xxxxxx has no upstream branch.`
+
+Isto acontece porque replicaram o projeto, tecnicamente não é o mesmo, o vosso novo branch não tem nenhuma réplica remota associada.
+Façam como o `git` sugeriu: `git push --set-upstream origin ist1xxxxxx`.
+
+A partir daqui, podem só utilizar simplesmente `git push` e `git pull` neste branch.
+
+Alternativamente, podem executar `git config push.autoSetupRemote true` para o `git push` fazer isto automaticamente para qualquer branch que criem, ou podem executar `git config --global push.autoSetupRemote true`, para aplicar essa configuração a todos os projetos git que tens ou venhas a ter.
 
 ## 7. git pull
+
+O `git pull` é o inverso do `git push`: vai à réplica remota buscar novos commits para o branch atual. Isto é, assumindo que estás no branch `master`, o `git` vai buscar updates ao branch `master` remoto e aplica-os no teu `master` local.
+
+O `git pull --all`, faz `git pull` em todos os branches.
